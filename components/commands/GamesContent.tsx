@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import CommandPanel from "@/components/commands/CommandPanel";
 import { useSnakeGame } from "@/components/commands/snake/useSnakeGame";
+import { CANVAS_SIZE } from "@/components/commands/snake/snakeLogic";
 
 export default function GamesContent() {
   const containerRef = useRef<HTMLDivElement>(null);
