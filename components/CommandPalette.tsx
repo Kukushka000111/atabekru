@@ -5,6 +5,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CommandContent from "@/components/CommandContent";
 import { type Command, filterCommands } from "@/lib/commands";
 
+const WIDE_COMMANDS: Record<string, string> = {
+  "/music": "max-w-lg",
+  "/freetime": "max-w-4xl",
+  "/games": "max-w-md",
+};
+
 export default function CommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -106,7 +112,7 @@ export default function CommandPalette() {
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full max-w-xl overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] shadow-[0_24px_80px_rgba(0,0,0,0.55)] backdrop-blur-md"
+        className={`w-full overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] shadow-[0_24px_80px_rgba(0,0,0,0.55)] backdrop-blur-md ${activeCommand ? (WIDE_COMMANDS[activeCommand] ?? "max-w-xl") : "max-w-xl"}`}
       >
         <div className="border-b border-white/[0.06] px-4 py-3 sm:px-5">
           <input

@@ -4,6 +4,9 @@ import AboutContent from "@/components/commands/AboutContent";
 import BakeryContent from "@/components/commands/BakeryContent";
 import CommandStub from "@/components/commands/CommandStub";
 import ContactContent from "@/components/commands/ContactContent";
+import FreetimeContent from "@/components/commands/FreetimeContent";
+import GamesContent from "@/components/commands/GamesContent";
+import MusicContent from "@/components/commands/MusicContent";
 
 interface CommandContentProps {
   commandName: string;
@@ -13,6 +16,9 @@ const COMMAND_COMPONENTS: Record<string, React.ComponentType> = {
   "/about": AboutContent,
   "/bakery": BakeryContent,
   "/contact": ContactContent,
+  "/music": MusicContent,
+  "/freetime": FreetimeContent,
+  "/games": GamesContent,
 };
 
 export default function CommandContent({ commandName }: CommandContentProps) {
