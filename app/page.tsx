@@ -1,12 +1,12 @@
 import BackgroundEffects from "@/components/BackgroundEffects";
-import CommandPalette from "@/components/CommandPalette";
+import GalleryApp from "@/components/gallery/GalleryApp";
 import VibeStatus from "@/components/VibeStatus";
 
 export default function Home() {
   return (
     <>
       <BackgroundEffects />
-      <CommandPalette />
+      <GalleryApp />
       <VibeStatus />
     </>
   );

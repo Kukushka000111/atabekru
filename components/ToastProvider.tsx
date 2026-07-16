@@ -54,13 +54,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {message && (
           <motion.div
             key={message}
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.98 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none fixed bottom-8 left-1/2 z-[100] -translate-x-1/2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none fixed bottom-10 left-1/2 z-[100] -translate-x-1/2"
           >
-            <div className="rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-md">
+            <div className="rounded-sm border border-[#D4AF37]/25 bg-[#0a0a0c]/90 px-6 py-3 font-serif text-sm tracking-wide text-[#D4AF37]/90 shadow-[0_0_40px_rgba(212,175,55,0.12)] backdrop-blur-md">
               {message}
             </div>
           </motion.div>

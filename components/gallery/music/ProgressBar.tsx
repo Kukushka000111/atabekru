@@ -53,13 +53,12 @@ export default function ProgressBar({
   return (
     <div
       ref={barRef}
-      data-cursor-hover
       role="slider"
       aria-valuemin={0}
       aria-valuemax={duration}
       aria-valuenow={currentTime}
       aria-label="Прогресс воспроизведения"
-      className={`group relative h-1.5 w-full rounded-full bg-white/10 ${disabled ? "opacity-40" : "cursor-pointer"}`}
+      className={`group relative h-0.5 w-full bg-[#D4AF37]/10 ${disabled ? "opacity-40" : "cursor-pointer"}`}
       onMouseDown={(event) => {
         if (disabled) return;
         setIsDragging(true);
@@ -67,12 +66,12 @@ export default function ProgressBar({
       }}
     >
       <div
-        className="absolute inset-y-0 left-0 rounded-full bg-teal-400/80 transition-[width] duration-75"
+        className="absolute inset-y-0 left-0 bg-[#D4AF37]/60 transition-[width] duration-75"
         style={{ width: `${progress}%` }}
       />
       <div
-        className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-teal-300 opacity-0 shadow-[0_0_8px_rgba(45,212,191,0.6)] transition-opacity group-hover:opacity-100"
-        style={{ left: `calc(${progress}% - 6px)` }}
+        className="absolute top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-[#D4AF37] opacity-0 shadow-[0_0_8px_rgba(212,175,55,0.5)] transition-opacity group-hover:opacity-100"
+        style={{ left: `calc(${progress}% - 4px)` }}
       />
     </div>
   );

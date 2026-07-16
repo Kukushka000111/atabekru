@@ -10,60 +10,109 @@ import {
   type GameState,
   createInitialState,
   stepGame,
-} from "@/components/commands/snake/snakeLogic";
+} from "@/components/gallery/snake/snakeLogic";
+
+function drawMosaicTile(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  variant: number,
+) {
+  const px = x * CELL_SIZE;
+  const py = y * CELL_SIZE;
+
+  const baseColors = [
+    "rgba(20, 18, 28, 0.95)",
+    "rgba(28, 24, 36, 0.95)",
+    "rgba(16, 20, 32, 0.95)",
+    "rgba(24, 22, 30, 0.95)",
+  ];
+  ctx.fillStyle = baseColors[variant % baseColors.length];
+  ctx.fillRect(px, py, CELL_SIZE, CELL_SIZE);
+
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.08)";
+  ctx.lineWidth = 0.5;
+  ctx.strokeRect(px + 0.5, py + 0.5, CELL_SIZE - 1, CELL_SIZE - 1);
+
+  if (variant % 3 === 0) {
+    ctx.fillStyle = "rgba(212, 175, 55, 0.06)";
+    ctx.beginPath();
+    ctx.arc(px + CELL_SIZE / 2, py + CELL_SIZE / 2, 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
 
 function drawGame(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-  ctx.fillStyle = "rgba(255, 255, 255, 0.02)";
   for (let x = 0; x < GRID_SIZE; x++) {
     for (let y = 0; y < GRID_SIZE; y++) {
-      if ((x + y) % 2 === 0) {
-        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-      }
+      drawMosaicTile(ctx, x, y, (x + y) % 4);
     }
   }
 
-  ctx.strokeStyle = "rgba(45, 212, 191, 0.15)";
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= GRID_SIZE; i++) {
-    ctx.beginPath();
-    ctx.moveTo(i * CELL_SIZE, 0);
-    ctx.lineTo(i * CELL_SIZE, CANVAS_SIZE);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(0, i * CELL_SIZE);
-    ctx.lineTo(CANVAS_SIZE, i * CELL_SIZE);
-    ctx.stroke();
-  }
+  ctx.shadowColor = "rgba(220, 38, 38, 0.9)";
+  ctx.shadowBlur = 16;
+  const foodCx = state.food.x * CELL_SIZE + CELL_SIZE / 2;
+  const foodCy = state.food.y * CELL_SIZE + CELL_SIZE / 2;
+  const foodR = CELL_SIZE * 0.32;
 
-  ctx.shadowColor = "rgba(248, 113, 113, 0.9)";
-  ctx.shadowBlur = 10;
-  ctx.fillStyle = "#f87171";
-  const foodPadding = 2;
-  ctx.fillRect(
-    state.food.x * CELL_SIZE + foodPadding,
-    state.food.y * CELL_SIZE + foodPadding,
-    CELL_SIZE - foodPadding * 2,
-    CELL_SIZE - foodPadding * 2,
+  const rubyGradient = ctx.createRadialGradient(
+    foodCx - 1,
+    foodCy - 1,
+    0,
+    foodCx,
+    foodCy,
+    foodR,
   );
+  rubyGradient.addColorStop(0, "#fca5a5");
+  rubyGradient.addColorStop(0.5, "#dc2626");
+  rubyGradient.addColorStop(1, "#7f1d1d");
+  ctx.fillStyle = rubyGradient;
+  ctx.beginPath();
+  ctx.arc(foodCx, foodCy, foodR, 0, Math.PI * 2);
+  ctx.fill();
   ctx.shadowBlur = 0;
 
   state.snake.forEach((segment, index) => {
-    const padding = index === 0 ? 1 : 2;
-    ctx.shadowColor = "rgba(45, 212, 191, 0.8)";
-    ctx.shadowBlur = index === 0 ? 14 : 8;
-    ctx.fillStyle = index === 0 ? "#5eead4" : "#2dd4bf";
-    ctx.fillRect(
-      segment.x * CELL_SIZE + padding,
-      segment.y * CELL_SIZE + padding,
-      CELL_SIZE - padding * 2,
-      CELL_SIZE - padding * 2,
-    );
+    const cx = segment.x * CELL_SIZE + CELL_SIZE / 2;
+    const cy = segment.y * CELL_SIZE + CELL_SIZE / 2;
+    const radius = index === 0 ? CELL_SIZE * 0.38 : CELL_SIZE * 0.3;
+
+    ctx.shadowColor = "rgba(212, 175, 55, 0.7)";
+    ctx.shadowBlur = index === 0 ? 12 : 6;
+    const goldGradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+    goldGradient.addColorStop(0, "#f5e6a3");
+    goldGradient.addColorStop(0.6, "#D4AF37");
+    goldGradient.addColorStop(1, "#8B7355");
+    ctx.fillStyle = goldGradient;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.fill();
   });
   ctx.shadowBlur = 0;
 
-  ctx.strokeStyle = "rgba(45, 212, 191, 0.4)";
+  if (state.snake.length > 1) {
+    ctx.strokeStyle = "rgba(212, 175, 55, 0.5)";
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    const first = state.snake[0];
+    ctx.moveTo(
+      first.x * CELL_SIZE + CELL_SIZE / 2,
+      first.y * CELL_SIZE + CELL_SIZE / 2,
+    );
+    for (let i = 1; i < state.snake.length; i++) {
+      const seg = state.snake[i];
+      ctx.lineTo(
+        seg.x * CELL_SIZE + CELL_SIZE / 2,
+        seg.y * CELL_SIZE + CELL_SIZE / 2,
+      );
+    }
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle = "rgba(212, 175, 55, 0.25)";
   ctx.lineWidth = 2;
   ctx.strokeRect(1, 1, CANVAS_SIZE - 2, CANVAS_SIZE - 2);
 }
@@ -158,6 +207,5 @@ export function useSnakeGame({ onGameOver }: UseSnakeGameOptions = {}) {
     queueDirection,
     stopLoop,
     score,
-    isGameOver: () => stateRef.current.isGameOver,
   };
 }

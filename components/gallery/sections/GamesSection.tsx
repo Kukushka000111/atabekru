@@ -2,11 +2,11 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
-import CommandPanel from "@/components/commands/CommandPanel";
-import { useSnakeGame } from "@/components/commands/snake/useSnakeGame";
-import { CANVAS_SIZE } from "@/components/commands/snake/snakeLogic";
+import GalleryPanel from "@/components/gallery/GalleryPanel";
+import { useSnakeGame } from "@/components/gallery/snake/useSnakeGame";
+import { CANVAS_SIZE } from "@/components/gallery/snake/snakeLogic";
 
-export default function GamesContent() {
+export default function GamesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const restartRef = useRef<HTMLButtonElement>(null);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -27,10 +27,6 @@ export default function GamesContent() {
 
   useEffect(() => {
     containerRef.current?.focus();
-    const input = document.querySelector<HTMLInputElement>(
-      'input[placeholder*="команду"]',
-    );
-    input?.blur();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
@@ -60,16 +56,14 @@ export default function GamesContent() {
   }, [queueDirection, isGameOver, handleRestart, stopLoop]);
 
   return (
-    <CommandPanel>
-      <div
-        ref={containerRef}
-        tabIndex={-1}
-        className="relative mx-auto w-fit outline-none"
-      >
-        <div className="mb-3 flex items-center justify-between">
-          <p className="text-xs text-white/40">Змейка</p>
-          <p className="font-mono text-sm text-teal-300/80">
-            Score: {score}
+    <GalleryPanel>
+      <div ref={containerRef} tabIndex={-1} className="mx-auto w-fit outline-none">
+        <div className="mb-4 flex items-center justify-between">
+          <p className="font-serif text-[10px] tracking-[0.25em] text-[#D4AF37]/45">
+            НИТЬ АРИАДНЫ
+          </p>
+          <p className="font-serif text-sm text-[#D4AF37]/70">
+            {score} самоцветов
           </p>
         </div>
 
@@ -78,8 +72,8 @@ export default function GamesContent() {
             ref={canvasRef}
             width={CANVAS_SIZE}
             height={CANVAS_SIZE}
-            className="rounded-lg border border-teal-400/20 bg-black/40"
-            aria-label="Игровое поле Змейка"
+            className="border border-[#D4AF37]/20 shadow-[0_0_40px_rgba(212,175,55,0.06)]"
+            aria-label="Мозаичное поле — игра Змейка"
           />
 
           <AnimatePresence>
@@ -88,23 +82,22 @@ export default function GamesContent() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/70 backdrop-blur-sm"
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 flex items-center justify-center bg-[#050507]/85 backdrop-blur-sm"
               >
-                <div className="space-y-4 px-4 text-center">
-                  <p className="text-sm leading-relaxed text-white/80">
-                    Вы врезались в стену дедлайна.
+                <div className="space-y-5 px-6 text-center">
+                  <p className="font-serif text-sm leading-relaxed tracking-wide text-[#D4AF37]/90">
+                    Нить оборвалась.
                     <br />
-                    Иди дебажить код.
+                    Попробуйте снова.
                   </p>
                   <button
                     ref={restartRef}
                     type="button"
-                    data-cursor-hover
                     onClick={handleRestart}
-                    className="rounded-xl border border-teal-400/25 bg-teal-400/10 px-4 py-2 text-sm text-teal-200 transition-colors hover:border-teal-400/40 hover:bg-teal-400/20"
+                    className="border border-[#D4AF37]/30 px-6 py-2 font-serif text-xs tracking-[0.2em] text-[#D4AF37]/80 transition-all duration-400 hover:border-[#D4AF37]/60 hover:shadow-[0_0_24px_rgba(212,175,55,0.12)]"
                   >
-                    Попробовать снова
+                    ВОЗРОДИТЬ НИТЬ
                   </button>
                 </div>
               </motion.div>
@@ -112,10 +105,10 @@ export default function GamesContent() {
           </AnimatePresence>
         </div>
 
-        <p className="mt-3 text-center text-[11px] text-white/25">
+        <p className="mt-4 text-center font-serif text-[10px] tracking-widest text-white/25">
           ↑ ↓ ← → — управление
         </p>
       </div>
-    </CommandPanel>
+    </GalleryPanel>
   );
 }

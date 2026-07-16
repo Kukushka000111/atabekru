@@ -2,6 +2,7 @@ export type DayStatus = "busy" | "free" | "gaming";
 
 export interface DaySchedule {
   id: string;
+  roman: string;
   shortName: string;
   name: string;
   status: DayStatus;
@@ -11,6 +12,7 @@ export interface DaySchedule {
 export const WEEK_SCHEDULE: DaySchedule[] = [
   {
     id: "mon",
+    roman: "I",
     shortName: "Пн",
     name: "Понедельник",
     status: "busy",
@@ -18,6 +20,7 @@ export const WEEK_SCHEDULE: DaySchedule[] = [
   },
   {
     id: "tue",
+    roman: "II",
     shortName: "Вт",
     name: "Вторник",
     status: "busy",
@@ -25,6 +28,7 @@ export const WEEK_SCHEDULE: DaySchedule[] = [
   },
   {
     id: "wed",
+    roman: "III",
     shortName: "Ср",
     name: "Среда",
     status: "busy",
@@ -32,6 +36,7 @@ export const WEEK_SCHEDULE: DaySchedule[] = [
   },
   {
     id: "thu",
+    roman: "IV",
     shortName: "Чт",
     name: "Четверг",
     status: "busy",
@@ -39,6 +44,7 @@ export const WEEK_SCHEDULE: DaySchedule[] = [
   },
   {
     id: "fri",
+    roman: "V",
     shortName: "Пт",
     name: "Пятница",
     status: "free",
@@ -47,6 +53,7 @@ export const WEEK_SCHEDULE: DaySchedule[] = [
   },
   {
     id: "sat",
+    roman: "VI",
     shortName: "Сб",
     name: "Суббота",
     status: "gaming",
@@ -55,6 +62,7 @@ export const WEEK_SCHEDULE: DaySchedule[] = [
   },
   {
     id: "sun",
+    roman: "VII",
     shortName: "Вс",
     name: "Воскресенье",
     status: "gaming",
@@ -65,21 +73,21 @@ export const WEEK_SCHEDULE: DaySchedule[] = [
 
 export const STATUS_STYLES: Record<
   DayStatus,
-  { dot: string; glow: string; border: string }
+  { accent: string; border: string; glow: string }
 > = {
   busy: {
-    dot: "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]",
-    glow: "hover:shadow-[0_0_24px_rgba(239,68,68,0.15)] hover:border-red-500/25",
-    border: "border-red-500/10",
+    accent: "text-red-400/70",
+    border: "border-red-900/30",
+    glow: "hover:shadow-[0_0_20px_rgba(127,29,29,0.15)]",
   },
   free: {
-    dot: "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]",
-    glow: "hover:shadow-[0_0_24px_rgba(16,185,129,0.15)] hover:border-emerald-500/25",
-    border: "border-emerald-500/10",
+    accent: "text-[#D4AF37]/70",
+    border: "border-[#D4AF37]/20",
+    glow: "hover:shadow-[0_0_24px_rgba(212,175,55,0.1)]",
   },
   gaming: {
-    dot: "bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]",
-    glow: "hover:shadow-[0_0_24px_rgba(139,92,246,0.15)] hover:border-violet-500/25",
-    border: "border-violet-500/10",
+    accent: "text-purple-400/60",
+    border: "border-purple-900/25",
+    glow: "hover:shadow-[0_0_20px_rgba(88,28,135,0.12)]",
   },
 };

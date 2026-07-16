@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, JetBrains_Mono } from "next/font/google";
-import CustomCursor from "@/components/CustomCursor";
+import { Cinzel, Inter } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin", "cyrillic"],
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
-  title: "atabek.ru",
-  description: "Персональный сайт-портфолио — Command Palette интерфейс",
+  title: "atabek.ru — Divine Gallery",
+  description:
+    "Цифровая галерея Атабека. Искусство звука и кода в духе Neo-Renaissance.",
 };
 
 export default function RootLayout({
@@ -27,13 +28,10 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${geistSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${cinzel.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        <Providers>
-          <CustomCursor />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
